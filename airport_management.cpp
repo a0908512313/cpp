@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 using namespace std;
 
 #define MAX_FLIGHT 50
@@ -13,23 +15,23 @@ struct Flight
     char passengers[MAX_PESSENGERS_PER_FLIGHT][50];
 };
 
-void displayFlights(const struct Flight flights[],int numFlights
+
+void displayFlights(const struct Flight flights[],int numFlights)
 {
     printf("\n--- Flights Information ---\n");
     for(int i = 0; i < numFlights; i++){
         printf("Flights %s to %s (%d/%d passengers)\n",
-        flight[i].flightNumber, flights[i].destination,flights[i].numPessengers,flights[i].capacity);
+        flights[i].flightNumber, flights[i].destination,flights[i].numPessengers,flights[i].capacity);
         for(int j = 0; j < flights[i].numPessengers; j++){
             printf("Passengers %d: %s\n",j+1,flights[i].passengers[i]);
         }
         printf("-------------------------------\n");
     }
 };
-)
 
-void addPassengers(struct flight *flight, const char *passengerName){
+void addPassengers(struct Flight *flight, const char *passengerName){
     if(flight -> numPessengers < flight -> capacity){
-        strcpy(flight -> passengers[flight -> numPessengers].passengerName);
+        strcpy(flight -> passengers[flight -> numPessengers],passengerName);
         flight -> numPessengers++;
         printf("Passengers %s added to the flight %s. \n",passengerName, flight -> flightNumber);
     }else{
@@ -38,7 +40,7 @@ void addPassengers(struct flight *flight, const char *passengerName){
 }
 
 int main(){
-    struct Flight flights[MAX_FLIGHTS];
+    struct Flight flights[MAX_FLIGHT];
     int numFlights = 0;
     int choice;
     do{
@@ -58,12 +60,12 @@ int main(){
             case 2:
                 if(numFlights < MAX_FLIGHT){
                     printf("Enter flight number : ");
-                    scanf("%s", flight[numFlights].flightNumber);
+                    scanf("%s", flights[numFlights].flightNumber);
                     printf("Enter destination : ");
-                    scanf("%s", flight[numFlights].destination);
+                    scanf("%s", flights[numFlights].destination);
                     printf("Enter capacity : ");
-                    scanf("%s", flight[numFlights].capacity);
-                    flight[numFlights].numPessengers = 0;
+                    scanf("%s", flights[numFlights].capacity);
+                    flights[numFlights].numPessengers = 0;
                     
                     numFlights++;
 
@@ -80,7 +82,7 @@ int main(){
 
                 int flightIndex = -1;
                 for(int i = 0; i < numFlights; i++){
-                    if(strucmp(flights[i].flightNumber,flightNumber) == 0){
+                    if(strcmp(flights[i].flightNumber,flightNumber) == 0){
                         flightIndex = i;
                         break;
                     }
@@ -94,17 +96,18 @@ int main(){
                 addPassengers(&flights[flightIndex], passengerName);
             }else{
                 printf("Flight not found.\n");
-                break;
             }
+                break;
             
             case 4:
-            printf("Exiting the program. Thank you!\n");
-            break;
+                printf("Exiting the program. Thank you!\n");
+                    break;
 
             default:
-            printf("Invalid choice. Please enter a valid option.\n");
-        }while(choice != 4);
-    }
-    
+                printf("Invalid choice. Please enter a valid option.\n");
+        }
+        
+        while(choice != 4);
+
     return 0;
 }
